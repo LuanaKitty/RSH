@@ -24,13 +24,11 @@ fn main(){
 
             match command {
                 "cd" => {
-                    let home_dir = env::var("HOME").unwrap_or_else(|_| "/".to_string());
-    let new_dir = args.peekable().peek()
-        .map_or(home_dir.as_str(), |x| *x);
-
-    let root = Path::new(new_dir);
-    if let Err(e) = env::set_current_dir(&root) {
-        eprintln!("{}", e);
+                    let new_dir = args.peekable().peek()
+                        .map_or("/home", |x| *x);
+                    let root = Path::new(new_dir);
+                    if let Err(e) = env::set_current_dir(&root) {
+                        eprintln!("{}", e);
                     }
 
                     previous_command = None;
